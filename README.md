@@ -15,6 +15,8 @@ Proyecto Integrador en Python y MySQL del Tercer Semestre del año 2023...
 
 :heavy_check_mark: David Esteche
 
+:heavy_check_mark: Johana Martínez
+
 :heavy_check_mark: Sofía Aguirre Zelay
 
 :heavy_check_mark: Araceli Pintos
