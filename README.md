@@ -3,7 +3,7 @@
 
 # TheJavaDabaDev´s-Proyecto Integrador
 Proyecto Integrador en Python y MySQL del Tercer Semestre del año 2023...
-Integrator Project in Python and MySQL of the Third Semester of the year 2023...
+
 
 ### `Somos The JavaDabaDev's:`
 
