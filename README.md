@@ -1,5 +1,9 @@
+![Ejemplo de imagen en GitHub](https://i.imgur.com/qaPOw7t.png)
+
 # TheJavaDabaDevs-Proyecto-Integrador
 Proyecto integrador Python Tercer semestre
+
+### `Somos The JavaDabaDev's:`
 
 
 :heavy_check_mark: Ciro Valentin Martinez Gonzalez
