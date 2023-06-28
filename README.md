@@ -1,7 +1,7 @@
 ![Ejemplo de imagen en GitHub](https://i.imgur.com/qaPOw7t.png)
 
 # TheJavaDabaDevs-Proyecto-Integrador
-Proyecto Integrador en Python del Tercer Semestre del año 2023...
+Proyecto Integrador en Python y MySQL del Tercer Semestre del año 2023...
 
 ### `Somos The JavaDabaDev's:`
 
