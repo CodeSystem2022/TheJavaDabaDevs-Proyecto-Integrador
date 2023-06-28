@@ -1,5 +1,4 @@
 # JavaDabaClub: Programa registro de turnos
-![Ejemplo de imagen en GitHub](https://i.imgur.com/qaPOw7t.png)
 
 # TheJavaDabaDev´s-Proyecto Integrador
 Proyecto Integrador en Python y MySQL del Tercer Semestre del año 2023...
