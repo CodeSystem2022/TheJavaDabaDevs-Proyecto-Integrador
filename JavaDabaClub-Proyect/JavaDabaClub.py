@@ -71,3 +71,25 @@ def buscar_socio():
         # Cierra la conexión a la base de datos
         cursor.close()
         db.close()
+   # Muestra el resultado de la búsqueda en una ventana emergente
+        if result:
+            messagebox.showinfo("Búsqueda Exitosa", f"Se encontraron los siguientes socios:\n{result}")
+        else:
+            messagebox.showinfo("Búsqueda Exitosa", "No se encontraron socios con ese nombre.")
+    except mysql.connector.Error as error:
+        # Muestra un mensaje de error en caso de que ocurra un problema con la base de datos
+        messagebox.showerror("Error de Base de Datos", f"No se pudo realizar la búsqueda.\nError: {error}")
+# Función para eliminar un socio de la base de datos
+def eliminar_socio():
+    # Obtiene el nombre del socio a eliminar
+    nombre_eliminar = entry_eliminar.get()
+
+    # Conexión a la base de datos MySQL
+    try:
+        db = mysql.connector.connect(
+            host="127.0.0.1",
+            user="root",
+            password="1234",
+            database="socios"
+        )
+        cursor = db.cursor()
