@@ -51,3 +51,23 @@ def buscar_socio():
     # Obtiene el nombre ingresado por el usuario
     nombre_buscar = entry_buscar.get()
 
+# Ciro Valentin Martinez
+# Conexión a la base de datos MySQL
+    try:
+        db = mysql.connector.connect(
+            host="127.0.0.1",
+            user="root",
+            password="1234",
+            database="socios"
+        )
+        cursor = db.cursor()
+
+        # Realiza la búsqueda del socio en la tabla correspondiente
+        query = "SELECT * FROM socios WHERE nombre = %s"
+        value = (nombre_buscar,)
+        cursor.execute(query, value)
+        result = cursor.fetchall()
+
+        # Cierra la conexión a la base de datos
+        cursor.close()
+        db.close()
