@@ -2,6 +2,49 @@ import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
 
+# Conexión a la base de datos MySQL
+global cursor
+
+db = mysql.connector.connect(
+    host="127.0.0.1",
+    user="root",
+    password="root",
+    # database="socios"
+)
+cursor = db.cursor()
+try:
+    sql = "CREATE DATABASE socios"
+    cursor.execute(sql)
+    cursor.close()
+except:
+    pass
+
+db = mysql.connector.connect(
+    host="127.0.0.1",
+    user="root",
+    password="root",
+    database="socios"
+)
+Cursor = db.cursor()
+try:
+    sql = """CREATE TABLE socios (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(100) NOT NULL,
+            apellido VARCHAR(100) NOT NULL,
+            dni VARCHAR(10) NOT NULL,
+            direccion VARCHAR(200) NOT NULL,
+            mail VARCHAR(100) NOT NULL,
+            telefono VARCHAR(20) NOT NULL,
+            turnos VARCHAR(20) NULL
+            );"""
+    cursor.execute(sql)
+    cursor.close()
+except:
+    pass
+cursor = db.cursor()
+
+
+
 # Función para registrar un socio en la base de datos
 def registrar_socio():
     # Obtiene los datos ingresados por el usuario
@@ -16,7 +59,7 @@ def registrar_socio():
         db = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="1234",
+            password="root",
             database="socios"
         )
         cursor = db.cursor()
@@ -57,7 +100,7 @@ def buscar_socio():
         db = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="1234",
+            password="root",
             database="socios"
         )
         cursor = db.cursor()
@@ -89,7 +132,7 @@ def eliminar_socio():
         db = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="1234",
+            password="root",
             database="socios"
         )
         cursor = db.cursor()
@@ -120,7 +163,7 @@ def mostrar_registros():
         db = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="1234",
+            password="root",
             database="socios"
         )
         cursor = db.cursor()
@@ -155,10 +198,56 @@ def mostrar_registros():
         # Muestra un mensaje de error en caso de que ocurra un problema con la base de datos
         messagebox.showerror("Error de Base de Datos", f"No se pudo mostrar los registros.\nError: {error}")
 
+
+# Johana Martinez Funtions
+
+def agendarTurnos():
+    
+    nombre = entry_nombre.get()
+    apellido = entry_apellido.get()
+    dni = entry_dni.get()
+    direccion = entry_direccion.get()
+    mail = entry_mail.get()
+    telefono = entry_telefono.get()
+    turnos = entry_label_agendarTurnos.get()
+    try:
+        sql = "UPDATE socios SET turnos = %s WHERE dni = %s"
+        values = (turnos, dni)
+        cursor.execute(sql, values)
+        db.commit()
+        messagebox.showinfo("Actualización Exitosa", "El turno ha sido actualizado exitosamente.")
+        
+    except mysql.connector.Error as error:
+        print(error)
+        print("Hubo un error al Crear el turno")
+        messagebox.showerror("Error de Base de Datos", f"No se pudo actualizar el turno.\nError: {error}")
+
+def VerTurnos():
+    nombre = entry_nombre.get()
+    apellido = entry_apellido.get()
+    dni = entry_dni.get()
+    direccion = entry_direccion.get()
+    mail = entry_mail.get()
+    telefono = entry_telefono.get()
+    turnos = entry_label_agendarTurnos.get()
+    try:
+        sql = "SELECT turnos FROM socios WHERE dni = %s"
+        value = (dni,)
+        cursor.execute(sql, value)
+        result = cursor.fetchone()
+        if result:
+            messagebox.showinfo("Turno", f"El turno de {nombre} {apellido} con el dni: {dni} es el {result[0]}.")
+        else:
+            messagebox.showinfo("Turno", f"No se encontró un turno para {nombre}.")
+    except mysql.connector.Error as error:
+        messagebox.showerror("Error de Base de Datos", f"No se pudo obtener el turno.\nError: {error}")
+    
+
+
 # Crear ventana principal
 window = tk.Tk()
 window.title("JavaDabaClub")
-window.geometry("400x500")
+window.geometry("400x600")
 
 # Etiquetas y campos de entrada para el registro de socios
 label_nombre = tk.Label(window, text="Nombre:")
@@ -218,6 +307,30 @@ btn_eliminar.pack()
 # Botón para mostrar los registros
 btn_mostrar_registros = tk.Button(window, text="Mostrar Registros", command=mostrar_registros)
 btn_mostrar_registros.pack()
+
+#Johana Martinez Buttons
+#Label y botones de agendar turnos
+label_agendarTurnos = tk.Label(window, 
+                               text="Agendar turno")
+label_agendarTurnos.pack()
+entry_label_agendarTurnos = tk.Entry(window)
+entry_label_agendarTurnos.insert(0, "DD/MM/AAAA")
+
+entry_label_agendarTurnos.pack()
+btn_agendarTurnos = tk.Button(window, 
+                         text="Agendar tu Turno!!!", 
+                         command=agendarTurnos)
+btn_agendarTurnos.pack()
+
+
+#Labels y botons de visualizar turnos
+label_verTurnos = tk.Label(window, 
+                            text="Ver Turnos")
+label_verTurnos.pack()
+btn_verTurnos = tk.Button(window, 
+                         text="Ver Turnos!!!", 
+                         command=VerTurnos)
+btn_verTurnos.pack()
 
 
 # Ejecutar ventana principal
