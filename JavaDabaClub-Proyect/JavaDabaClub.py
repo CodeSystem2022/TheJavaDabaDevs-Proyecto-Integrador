@@ -93,3 +93,24 @@ def eliminar_socio():
             database="socios"
         )
         cursor = db.cursor()
+        
+# David Esteche
+
+        # Elimina el socio de la tabla correspondiente
+        query = "DELETE FROM socios WHERE nombre = %s"
+        value = (nombre_eliminar,)
+        cursor.execute(query, value)
+        db.commit()
+
+        # Cierra la conexión a la base de datos
+        cursor.close()
+        db.close()
+
+        # Muestra un mensaje de éxito
+        messagebox.showinfo("Eliminación Exitosa", "El socio ha sido eliminado exitosamente.")
+
+        # Limpia el campo de entrada
+        entry_eliminar.delete(0, tk.END)
+    except mysql.connector.Error as error:
+        # Muestra un mensaje de error en caso de que ocurra un problema con la base de datos
+        messagebox.showerror("Error de Base de Datos", f"No se pudo eliminar el socio.\nError: {error}")
