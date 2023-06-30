@@ -1,15 +1,16 @@
 import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
+from conexiondb import DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
 
 # Conexión a la base de datos MySQL
 global cursor
 
 db = mysql.connector.connect(
-    host="127.0.0.1",
-    user="root",
-    password="1234",
-    database="socios"
+    host=DB_HOST,
+    user=DB_USER,
+    password=DB_PASSWORD,
+    database=DB_NAME
 )
 cursor = db.cursor()
 try:
@@ -20,10 +21,10 @@ except:
     pass
 
 db = mysql.connector.connect(
-    host="127.0.0.1",
-    user="root",
-    password="1234",
-    database="socios"
+    host=DB_HOST,
+    user=DB_USER,
+    password=DB_PASSWORD,
+    database=DB_NAME
 )
 Cursor = db.cursor()
 try:
@@ -57,10 +58,10 @@ def registrar_socio():
     # Conexión a la base de datos MySQL
     try:
         db = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="root",
-            database="socios"
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_NAME
         )
         cursor = db.cursor()
 
@@ -98,10 +99,10 @@ def buscar_socio():
 # Conexión a la base de datos MySQL
     try:
         db = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="1234",
-            database="socios"
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_NAME
         )
         cursor = db.cursor()
 
@@ -130,10 +131,10 @@ def eliminar_socio():
     # Conexión a la base de datos MySQL
     try:
         db = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="root",
-            database="socios"
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_NAME
         )
         cursor = db.cursor()
         
@@ -161,10 +162,10 @@ def eliminar_socio():
 def mostrar_registros():
     try:
         db = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="1234",
-            database="socios"
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_NAME
         )
         cursor = db.cursor()
 
@@ -211,10 +212,10 @@ def agendarTurnos():
     turnos = entry_label_agendarTurnos.get()
     try:
         db = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="1234",
-            database="socios"
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_NAME
         )
         cursor = db.cursor()
 
@@ -249,10 +250,10 @@ def VerTurnos():
 
     try:
         db = mysql.connector.connect(
-            host="127.0.0.1",
-            user="root",
-            password="1234",
-            database="socios"
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database=DB_NAME
         )
         cursor = db.cursor()
 
