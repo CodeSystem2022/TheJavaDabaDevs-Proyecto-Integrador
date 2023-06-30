@@ -8,8 +8,8 @@ global cursor
 db = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
-    password="root",
-    # database="socios"
+    password="1234",
+    database="socios"
 )
 cursor = db.cursor()
 try:
@@ -22,7 +22,7 @@ except:
 db = mysql.connector.connect(
     host="127.0.0.1",
     user="root",
-    password="root",
+    password="1234",
     database="socios"
 )
 Cursor = db.cursor()
@@ -100,7 +100,7 @@ def buscar_socio():
         db = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="root",
+            password="1234",
             database="socios"
         )
         cursor = db.cursor()
@@ -163,7 +163,7 @@ def mostrar_registros():
         db = mysql.connector.connect(
             host="127.0.0.1",
             user="root",
-            password="root",
+            password="1234",
             database="socios"
         )
         cursor = db.cursor()
@@ -202,7 +202,6 @@ def mostrar_registros():
 # Johana Martinez Funtions
 
 def agendarTurnos():
-    
     nombre = entry_nombre.get()
     apellido = entry_apellido.get()
     dni = entry_dni.get()
@@ -211,38 +210,68 @@ def agendarTurnos():
     telefono = entry_telefono.get()
     turnos = entry_label_agendarTurnos.get()
     try:
-        sql = "UPDATE socios SET turnos = %s WHERE dni = %s"
-        values = (turnos, dni)
-        cursor.execute(sql, values)
-        db.commit()
-        messagebox.showinfo("Actualización Exitosa", "El turno ha sido actualizado exitosamente.")
-        
+        db = mysql.connector.connect(
+            host="127.0.0.1",
+            user="root",
+            password="1234",
+            database="socios"
+        )
+        cursor = db.cursor()
+
+        # Verificar si el socio ya existe en la base de datos
+        query = "SELECT * FROM socios WHERE dni = %s"
+        value = (dni,)
+        cursor.execute(query, value)
+        result = cursor.fetchone()
+
+        if result:
+            # El socio existe, actualizar el campo de turnos
+            query = "UPDATE socios SET turnos = %s WHERE dni = %s"
+            values = (turnos, dni)
+            cursor.execute(query, values)
+            db.commit()
+
+            messagebox.showinfo("Actualización Exitosa", "El turno ha sido actualizado exitosamente.")
+        else:
+            # El socio no existe, mostrar un mensaje de error
+            messagebox.showerror("Error de Base de Datos", "No se encontró un socio con ese DNI.")
+
+        # Cerrar la conexión a la base de datos
+        cursor.close()
+        db.close()
     except mysql.connector.Error as error:
-        print(error)
-        print("Hubo un error al Crear el turno")
         messagebox.showerror("Error de Base de Datos", f"No se pudo actualizar el turno.\nError: {error}")
 
 def VerTurnos():
     nombre = entry_nombre.get()
     apellido = entry_apellido.get()
     dni = entry_dni.get()
-    direccion = entry_direccion.get()
-    mail = entry_mail.get()
-    telefono = entry_telefono.get()
-    turnos = entry_label_agendarTurnos.get()
+
     try:
-        sql = "SELECT turnos FROM socios WHERE dni = %s"
+        db = mysql.connector.connect(
+            host="127.0.0.1",
+            user="root",
+            password="1234",
+            database="socios"
+        )
+        cursor = db.cursor()
+
+        # Obtener el turno del socio según su DNI
+        query = "SELECT turnos FROM socios WHERE dni = %s"
         value = (dni,)
-        cursor.execute(sql, value)
+        cursor.execute(query, value)
         result = cursor.fetchone()
+
         if result:
-            messagebox.showinfo("Turno", f"El turno de {nombre} {apellido} con el dni: {dni} es el {result[0]}.")
+            messagebox.showinfo("Turno", f"El turno del socio con DNI {dni} es el {result[0]}.")
         else:
-            messagebox.showinfo("Turno", f"No se encontró un turno para {nombre}.")
+            messagebox.showinfo("Turno", f"No se encontró un turno para el socio con DNI {dni}.")
+
+        # Cerrar la conexión a la base de datos
+        cursor.close()
+        db.close()
     except mysql.connector.Error as error:
         messagebox.showerror("Error de Base de Datos", f"No se pudo obtener el turno.\nError: {error}")
-    
-
 
 # Crear ventana principal
 window = tk.Tk()
