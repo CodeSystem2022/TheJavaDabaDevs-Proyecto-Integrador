@@ -55,6 +55,7 @@ def registrar_socio():
     direccion = entry_direccion.get()
     mail = entry_mail.get()
     telefono = entry_telefono.get()
+
     # Conexión a la base de datos MySQL
     try:
         db = mysql.connector.connect(
@@ -64,6 +65,39 @@ def registrar_socio():
             database=DB_NAME
         )
         cursor = db.cursor()
+
+        # Crea la base de datos socios si la misma no existe
+        db = mysql.connector.connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+        )
+        cursor = db.cursor()
+        cursor.execute("CREATE DATABASE IF NOT EXISTS socios")
+        cursor.close()
+        db.close()
+
+        # Coencta con la base de datos
+        db = mysql.connector.connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            database="socios"
+        )
+        cursor = db.cursor()
+
+        # Crea la tabla socios si la misma no existe con las columnas necesarias
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS socios (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                nombre VARCHAR(100) NOT NULL,
+                apellido VARCHAR(100) NOT NULL,
+                dni VARCHAR(10) NOT NULL,
+                mail VARCHAR(100) NOT NULL,
+                telefono VARCHAR(20) NOT NULL,
+                turno VARCHAR(20)
+            )
+        """)
 
         # Inserta los datos del socio en la tabla correspondiente
         query = "INSERT INTO socios (nombre, apellido, dni, direccion, mail, telefono) VALUES (%s, %s, %s, %s, %s, %s)"
@@ -266,7 +300,7 @@ def VerTurnos():
         if result:
             messagebox.showinfo("Turno", f"El turno del socio con DNI {dni} es el {result[0]}.")
         else:
-            messagebox.showinfo("Turno", f"No se encontró un turno para el socio con DNI {dni}.")
+            messagebox.showinfo("Turno", f"No se encontró un turno para el socio con DNI {dni}. Coloque un DNI válido")
 
         # Cerrar la conexión a la base de datos
         cursor.close()
