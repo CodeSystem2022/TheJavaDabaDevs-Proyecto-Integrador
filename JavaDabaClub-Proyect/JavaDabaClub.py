@@ -1,3 +1,4 @@
+# Marita Campos
 import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
@@ -45,7 +46,7 @@ except:
 cursor = db.cursor()
 
 
-
+# Marcelo Boujon
 # Función para registrar un socio en la base de datos
 def registrar_socio():
     # Obtiene los datos ingresados por el usuario
@@ -90,12 +91,12 @@ def registrar_socio():
         # Muestra un mensaje de error en caso de que ocurra un problema con la base de datos
         messagebox.showerror("Error de Base de Datos", f"No se pudo registrar el socio.\nError: {error}")
 
+#Araceli Pintos
 # Función para buscar un socio por su nombre en la base de datos
 def buscar_socio():
     # Obtiene el nombre ingresado por el usuario
     nombre_buscar = entry_buscar.get()
 
-# Ciro Valentin Martinez
 # Conexión a la base de datos MySQL
     try:
         db = mysql.connector.connect(
@@ -123,6 +124,8 @@ def buscar_socio():
     except mysql.connector.Error as error:
         # Muestra un mensaje de error en caso de que ocurra un problema con la base de datos
         messagebox.showerror("Error de Base de Datos", f"No se pudo realizar la búsqueda.\nError: {error}")
+
+#David Esteche
 # Función para eliminar un socio de la base de datos
 def eliminar_socio():
     # Obtiene el nombre del socio a eliminar
@@ -138,8 +141,6 @@ def eliminar_socio():
         )
         cursor = db.cursor()
         
-# David Esteche
-
         # Elimina el socio de la tabla correspondiente
         query = "DELETE FROM socios WHERE nombre = %s"
         value = (nombre_eliminar,)
@@ -158,7 +159,8 @@ def eliminar_socio():
     except mysql.connector.Error as error:
         # Muestra un mensaje de error en caso de que ocurra un problema con la base de datos
         messagebox.showerror("Error de Base de Datos", f"No se pudo eliminar el socio.\nError: {error}")
-
+        
+# Ciro Martinez
 def mostrar_registros():
     try:
         db = mysql.connector.connect(
@@ -200,7 +202,7 @@ def mostrar_registros():
         messagebox.showerror("Error de Base de Datos", f"No se pudo mostrar los registros.\nError: {error}")
 
 
-# Johana Martinez Funtions
+# Johana Martinez 
 
 def agendarTurnos():
     nombre = entry_nombre.get()
@@ -243,6 +245,7 @@ def agendarTurnos():
     except mysql.connector.Error as error:
         messagebox.showerror("Error de Base de Datos", f"No se pudo actualizar el turno.\nError: {error}")
 
+# Carolina Mamani
 def VerTurnos():
     nombre = entry_nombre.get()
     apellido = entry_apellido.get()
@@ -273,7 +276,8 @@ def VerTurnos():
         db.close()
     except mysql.connector.Error as error:
         messagebox.showerror("Error de Base de Datos", f"No se pudo obtener el turno.\nError: {error}")
-
+        
+# Augusto Cadado
 # Crear ventana principal
 window = tk.Tk()
 window.title("JavaDabaClub")
